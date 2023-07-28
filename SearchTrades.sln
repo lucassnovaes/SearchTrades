@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APISearchTrades", "APISearchTrades\APISearchTrades.csproj", "{F45C7A47-4AB5-4694-B809-97E6F2876584}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APISearchTrades", "APISearchTrades\APISearchTrades.csproj", "{F45C7A47-4AB5-4694-B809-97E6F2876584}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchTrades.Infra", "SearchTrades.Infra\SearchTrades.Infra.csproj", "{2472FD60-EA93-43EF-A9A8-6D3B6278D46F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{F45C7A47-4AB5-4694-B809-97E6F2876584}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F45C7A47-4AB5-4694-B809-97E6F2876584}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F45C7A47-4AB5-4694-B809-97E6F2876584}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2472FD60-EA93-43EF-A9A8-6D3B6278D46F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2472FD60-EA93-43EF-A9A8-6D3B6278D46F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2472FD60-EA93-43EF-A9A8-6D3B6278D46F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2472FD60-EA93-43EF-A9A8-6D3B6278D46F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

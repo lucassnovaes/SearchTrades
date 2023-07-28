@@ -1,3 +1,6 @@
+using SearchTrades.Infra.Messaging;
+using SearchTrades.Infra.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -9,12 +12,18 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+var config = new ConfigurationBuilder()
+                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                .AddJsonFile("appsettings.json")
+                .Build();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 
 app.UseHttpsRedirection();
 
