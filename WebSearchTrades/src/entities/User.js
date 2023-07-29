@@ -5,7 +5,7 @@ class User {
     this.role = role;
   }
 
-  fromObject({ username, password, role }) {
+  static fromObject({ username, password, role }) {
     return new this(username, password, role);
   }
 
