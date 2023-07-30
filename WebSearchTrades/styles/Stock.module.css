@@ -1,0 +1,36 @@
+/* StockList.css */
+
+.container {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+strong {
+  font-size: 18px;
+}
+
+.price {
+  font-size: 16px;
+  color: green;
+}
+
+.variation {
+  font-size: 14px;
+  color: #444;
+}
