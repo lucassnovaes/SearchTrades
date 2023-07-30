@@ -9,32 +9,27 @@ class SockService {
     this._httpClient = Axios.create({
       baseURL: config.stockAPI,
       headers: {
-        auth: user.getAccessToken()
+        auth: user?.getAccessToken()
       }
     });
   }
 
   async getStocks() {
-    return Promise.resolve(
-      [
-        {
-          name: "Company A",
-          code: "COMP-A",
-          price: 100.25,
-          variation: "+2.5%"
-        },
-        {
-          name: "Company B",
-          code: "COMP-B",
-          price: 75.5,
-          variation: "-1.2%"
-        }
-        // Adicione mais objetos de ação aqui, se necessário
-      ].map(Stock.fromObject)
-    );
-    const response = await this._httpClient.get("/stock", { headers: {} });
+    const response = await this._httpClient.get("/FindAllTickers", {
+      headers: {}
+    });
 
-    return response.data.map(Stock.fromObject);
+    return response.data.stocks.map(Stock.fromObject);
+  }
+
+  async getStocksByName(name) {
+    const response = await this._httpClient.get("/FindByTicker", {
+      headers: {},
+      params: { ticker: name }
+    });
+
+    // return Stock.fromObject(response.data[0]);
+    return response.data.results[0];
   }
 }
 

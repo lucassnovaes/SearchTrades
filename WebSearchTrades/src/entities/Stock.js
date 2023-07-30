@@ -1,13 +1,39 @@
 class Stock {
-  constructor(name, code, price, variation) {
+  constructor(stock, name, close, change, volume, market_cap, logo, sector) {
+    this.stock = stock;
     this.name = name;
-    this.code = code;
-    this.price = price;
-    this.variation = variation;
+    this.close = close;
+    this.change = change;
+    this.volume = volume;
+    this.market_cap = market_cap;
+    this.logo = logo;
+    this.sector = sector;
   }
 
-  static fromObject({ name, code, price, variation }) {
-    return new this(name, code, price, variation);
+  getPrice() {
+    return `R$ ` + this.close.replace(".", ",");
+  }
+
+  static fromObject({
+    stock,
+    name,
+    close,
+    change,
+    volume,
+    market_cap,
+    logo,
+    sector
+  }) {
+    return new Stock(
+      stock,
+      name,
+      close,
+      change,
+      volume,
+      market_cap,
+      logo,
+      sector
+    );
   }
 }
 
