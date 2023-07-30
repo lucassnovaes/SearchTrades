@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SearchTrades.Shared", "Sear
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SearchTrades.Infra", "SearchTrades.Infra\SearchTrades.Infra.csproj", "{74063430-B7DD-4835-AE5C-7D303D448276}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIAuth", "APIAuth\APIAuth.csproj", "{04D9874D-316E-418A-9460-DADC48068460}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
