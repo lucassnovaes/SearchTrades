@@ -2,6 +2,8 @@
 using SearchTrades.Infra.Models;
 using System.Text;
 using Microsoft.Extensions.Configuration;
+using Microsoft.VisualBasic;
+using SearchTrades.Infra.Constant;
 
 namespace SearchTrades.Infra.Messaging
 {
@@ -9,17 +11,10 @@ namespace SearchTrades.Infra.Messaging
     {
         private static readonly HttpClient _httpClient = new HttpClient();
 
-        private readonly IConfiguration _config;
-
-        public TeamsMessageSender(IConfiguration config)
-        {
-            _config = config;
-        }
-
         public void Send(TeamsMessage message)
         {
 
-            string url = _config.GetSection("WebhookUrl").Value;
+            string url = Cons.webHook();
 
             if (string.IsNullOrEmpty(url))
                 throw new ArgumentNullException("Parâmetro WebhookUrl não encontrado no config.");
