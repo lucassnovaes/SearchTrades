@@ -12,7 +12,7 @@ namespace APIAuth.DAL
             try
             {
                 MongoDbContext dbContext = new MongoDbContext();
-                var users2 = dbContext.Users.Find(x => x.User.Equals(user) && x.Password.Equals(password)).FirstOrDefault();
+                var users2 = dbContext.Users.FindAsync(x => x.User.Equals(user) && x.Password.Equals(password));
             }
             catch (Exception ex)
             {

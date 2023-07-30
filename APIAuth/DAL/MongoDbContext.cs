@@ -29,11 +29,11 @@ namespace APIAuth.DAL
             }
         }
 
-        public IMongoCollection<Users> Users
+        public IMongoCollection<Id> Users
         {
             get
             {
-                return _database.GetCollection<Users>("Users");
+                return _database.GetCollection<Id>("Users");
             }
         }
     }

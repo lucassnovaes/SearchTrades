@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace APIAuth.Controllers
 {
-    [Route("v1/api/[controller]")]
+    [Route("api/[controller]")]
     public class AuthenticateController : ControllerBase
     {
         [HttpGet]
