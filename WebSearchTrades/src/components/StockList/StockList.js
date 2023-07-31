@@ -11,28 +11,75 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import StockService from "@/src/services/StockService";
 import { useSelector } from "react-redux";
+import { TextField } from "@mui/material";
+import StockDetails from "./StockDetails";
 
 export default function StockList() {
   const [stocks, setStocks] = useState([]);
+  const [stocksSelected, setStocksSelected] = useState([]);
+  const [showDetais, setShowDetails] = useState(false);
+  const [stockSelected, setStockSelected] = useState("");
   const user = useSelector((state) => state?.user);
+  const stockService = new StockService(user);
 
   useEffect(() => {
-    const stockService = new StockService(user);
-    const stockList = stockService.getStocks();
-    setStocks(stockList);
-  }, [user]);
+    stockService.getStocks().then(setStocks);
+  }, []);
+
+  useEffect(() => {
+    setStocksSelected(stocks);
+  }, [stocks]);
+
+  const filterStock = (event) => {
+    const filter = event.target.value;
+
+    if (filter === "") setStocksSelected(stocks);
+
+    const stocksIncludes = stocks.filter(
+      (stock) =>
+        stock.name?.toLowerCase().includes(filter.toLowerCase()) ||
+        stock.stock?.toLowerCase().includes(filter.toLowerCase()) ||
+        stock.market_cap?.includes(filter)
+    );
+
+    setStocksSelected(stocksIncludes);
+  };
+
+  const showDetails = (event) => {
+    const id = event.target.id;
+    const selected = stocks.find((stock) => stock.stock === id);
+    stockService.getStocksByName(id).then((res) => {
+      selected.details = res;
+      setStockSelected(selected);
+      setShowDetails(true);
+    });
+  };
 
   return (
     <>
+      {showDetais && (
+        <StockDetails
+          stock={stockSelected}
+          setStockSelected={setStockSelected}
+        />
+      )}
       <main>
-        <Container sx={{ py: 8 }} maxWidth="md">
-          {/* End hero unit */}
+        {stocks.length && (
+          <TextField
+            id="outlined-basic"
+            label="Pesquisa"
+            variant="outlined"
+            style={{ marginTop: "3%", marginLeft: "1.5%" }}
+            onKeyUp={filterStock}
+          />
+        )}
+        <Container sx={{ py: 12 }} maxWidth="2" style={{ marginTop: "-5%" }}>
           <Grid container spacing={4}>
-            {stocks.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
+            {stocksSelected?.map((stock) => (
+              <Grid item key={stock.stock} xs={12} sm={6} md={2}>
                 <Card
                   sx={{
-                    height: "80%",
+                    height: "100%",
                     display: "flex",
                     flexDirection: "column"
                   }}
@@ -41,21 +88,22 @@ export default function StockList() {
                     component="div"
                     sx={{
                       // 16:9
-                      pt: "30%"
+                      pt: "85%"
                     }}
-                    image="https://img.freepik.com/premium-photo/stock-market-bull-market-trading-up-trend-graph-green-background-rising-price-generative-ai_1423-7209.jpg"
+                    image={stock.logo}
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">
-                      {stocks.name}
+                      {stock.name}
                     </Typography>
-                    <Typography>{stocks.code}</Typography>
-                    <Typography>{stocks.price}</Typography>
-                    <Typography>{stocks.variation}</Typography>
+                    <Typography>{stock.stock}</Typography>
+                    <Typography>{stock.getPrice()}</Typography>
+                    <Typography>{stock.sector}</Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small">Comprar</Button>
-                    <Button size="small">Detalhes</Button>
+                    <Button size="small" onClick={showDetails} id={stock.stock}>
+                      Detalhes
+                    </Button>
                   </CardActions>
                 </Card>
               </Grid>
