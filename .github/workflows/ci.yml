@@ -1,0 +1,77 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_dotnet:
+    name: Build and Publish .NET projects
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build and Publish APISearchTrades
+        env:
+          DOTNET_CLI_TELEMETRY_OPTOUT: "true"
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          DB_CONNECTION_STRING: ${{ secrets.DB_CONNECTION_STRING }}
+          AUTH_API: ${{ secrets.AUTH_API }}
+          STOCK_API: ${{ secrets.STOCK_API }}
+          DOCKER_KEY_REGISTRY: ${{ DOCKER_KEY_REGISTRY }}
+        run: |
+          cd APISearchTrades
+          dotnet restore
+          dotnet build -c Release
+          dotnet publish -c Release -o ./publish
+          docker build -t $DOCKER_KEY_REGISTRY/APISearchTrades .
+          docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+          docker push $DOCKER_KEY_REGISTRY/APISearchTrades
+
+      - name: Build and Publish APISearchTratesAuth
+        env:
+          DOTNET_CLI_TELEMETRY_OPTOUT: "true"
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          DB_CONNECTION_STRING: ${{ secrets.DB_CONNECTION_STRING }}
+          API_KEY: ${{ secrets.API_KEY }}
+        run: |
+          cd APISearchTratesAuth
+          dotnet restore
+          dotnet build -c Release
+          dotnet publish -c Release -o ./publish
+          docker build -t $DOCKER_KEY_REGISTRY/APISearchTratesAuth .
+          docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+          docker push $DOCKER_KEY_REGISTRY/APISearchTratesAuth
+
+  build_react:
+    name: Build and Publish React project
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14.x"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build and Publish WebSearchTrades
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          AUTH_API: ${{ secrets.AUTH_API }}
+          STOCK_API: ${{ secrets.STOCK_API }}
+        run: |
+          npm run build
+          docker build -t $DOCKER_KEY_REGISTRY/WebSearchTrades .
+          docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+          docker push $DOCKER_KEY_REGISTRY/WebSearchTrades
