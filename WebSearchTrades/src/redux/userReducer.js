@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import User from "../entities/User";
 
-const initialState = User.fromObject({});
+const initialState = {};
 
 export const userSlice = createSlice({
   name: "user",

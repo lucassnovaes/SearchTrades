@@ -11,11 +11,9 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import User from "@/src/entities/User";
 import AuthService from "@/src/services/AuthService";
-import { useDispatch } from "react-redux";
-import { setUser } from "@/src/redux/userReducer";
+import Cookies from "universal-cookie";
 
-export default function SignIn() {
-  const dispatch = useDispatch();
+export default function Login({accessToken, setAccessToken}) {
   const service = new AuthService();
 
   const handleSubmit = async (event) => {
@@ -31,7 +29,8 @@ export default function SignIn() {
       const userData = await service.encript(user);
       const logedUser = new User();
       logedUser.setToken(userData);
-      dispatch(setUser(logedUser));
+      new Cookies().set("accessToken", logedUser._accessToken);
+      setAccessToken(logedUser._accessToken);
     } catch (error) {
       console.log(error);
     }
