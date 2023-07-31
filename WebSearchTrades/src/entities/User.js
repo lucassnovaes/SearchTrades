@@ -9,9 +9,9 @@ class User {
     return new this(username, password, role);
   }
 
-  setToken({ Expiration, AccessToken }) {
-    this._expiration = Expiration;
-    this._accessToken = AccessToken;
+  setToken({ expiration, accessToken }) {
+    this._expiration = expiration;
+    this._accessToken = accessToken;
   }
 
   getAccessToken() {
@@ -20,6 +20,15 @@ class User {
 
   toString() {
     return JSON.stringify(this);
+  }
+
+  toObj() {
+    return {
+      password: this._password,
+      username: this.username,
+      accessToken: this._accessToken,
+      expiration: this._expiration
+    };
   }
 }
 
