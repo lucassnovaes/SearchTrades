@@ -22,7 +22,7 @@ jobs:
           DB_CONNECTION_STRING: ${{ secrets.DB_CONNECTION_STRING }}
           AUTH_API: ${{ secrets.AUTH_API }}
           STOCK_API: ${{ secrets.STOCK_API }}
-          DOCKER_KEY_REGISTRY: ${{ DOCKER_KEY_REGISTRY }}
+          DOCKER_KEY_REGISTRY: ${{ secrets.DOCKER_KEY_REGISTRY }}
         run: |
           cd APISearchTrades
           dotnet restore
